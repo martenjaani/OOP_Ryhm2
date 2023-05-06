@@ -148,7 +148,7 @@ public class Kasutajaliides extends Application {
 
 
         HBox paremKaardid=new HBox(10);
-        for (Kaart kaart : vasakKäsi) {
+        for (Kaart kaart : paremKäsi) {
             paremKaardid.getChildren().add(kaartJoonis(kaart));
         }
         VBox paremValik=new VBox(20);
