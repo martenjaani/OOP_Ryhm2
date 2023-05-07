@@ -2,6 +2,8 @@ package com.example.ryhmatoo2;
 
 import javafx.application.Application;
 import javafx.event.EventHandler;
+import javafx.geometry.Insets;
+import javafx.geometry.Pos;
 import javafx.scene.Group;
 import javafx.scene.Node;
 import javafx.scene.Scene;
@@ -29,20 +31,22 @@ public class Kasutajaliides extends Application { // -1 kui vasak ja 1 parem, 0 
     static int mängijaVõitudeArv = 0;
     static int arvutiVõitudeArv = 0;
     static int võitja;
-
     static List<Kaart> vasakKäsi = new ArrayList<>();
     static List<Kaart> paremKäsi = new ArrayList<>();
     static List<Kaart> ühiskaardid = new ArrayList<>();
 
     static HBox vasakKaardid=new HBox(10);
     static HBox paremKaardid=new HBox(10);
+    static String tühjadRead= "\n\n\n\n";
 
-    static Label tulemusTekst = new Label("");
+    static Label tulemusTekst = new Label(tühjadRead);
 
     static HBox skoorJaParimTulemus = new HBox();
     static HBox viisKaarti = new HBox(10);
     static HBox käed = new HBox(30);
-    static HBox käeValikud = new HBox();
+    static HBox käeValikud = new HBox(10);
+
+
 
     public static void main(String[] args) {
         launch(args);
@@ -50,7 +54,7 @@ public class Kasutajaliides extends Application { // -1 kui vasak ja 1 parem, 0 
 
     @Override
     public void start(Stage primaryStage) {
-        VBox juur = new VBox(15);
+        VBox juur=new VBox(10);
 
         Label tekst = new Label("Sisesta nimi: ");
         TextField sisend = new TextField();
@@ -80,7 +84,17 @@ public class Kasutajaliides extends Application { // -1 kui vasak ja 1 parem, 0 
 
     public void mäng() {
         Stage main = new Stage();
-        VBox juur =new VBox(20);
+
+        tulemusTekst.setStyle("-fx-font-size: 14");
+        tulemusTekst.setStyle("-fx-font-weight: bold");
+
+
+        GridPane juur = new GridPane();
+        juur.setMinSize(400,400);
+        juur.setPadding(new Insets(10,10,10,10));
+        juur.setHgap(10);
+        juur.setVgap(10);
+        juur.setAlignment(Pos.CENTER);
 
         HBox nupud = new HBox(10);
 
@@ -137,13 +151,26 @@ public class Kasutajaliides extends Application { // -1 kui vasak ja 1 parem, 0 
             uuedKaardid();
             käeValikud.getChildren().clear();
             käeValikud.getChildren().addAll(vasakNupp, paremNupp);
-            tulemusTekst.setText("");
+            tulemusTekst.setText(tühjadRead);
         });
 
-        juur.getChildren().addAll(nupud, skoorJaParimTulemus, tulemusTekst, viisKaarti, käed, käeValikud);
+        //juur.getChildren().addAll(nupud, skoorJaParimTulemus, tulemusTekst, viisKaarti, käed, käeValikud);
 
-        Scene scene = new Scene(juur,300,300);
+        juur.add(nupud,0,0);
+        juur.add(skoorJaParimTulemus,0,1);
+        juur.add(tulemusTekst,0,2);
+        juur.add(viisKaarti,0,3);
+        juur.add(käed,0,4);
+        juur.add(käeValikud,0,6);
+
+        juur.setBackground(new Background(new BackgroundFill(Color.LIGHTPINK,CornerRadii.EMPTY,Insets.EMPTY)));
+
+        Scene scene = new Scene(juur,400,450);
+
+        main.setMinHeight(500);
+        main.setMinWidth(400);
         main.setScene(scene);
+
         main.show();
     }
 
@@ -168,6 +195,8 @@ public class Kasutajaliides extends Application { // -1 kui vasak ja 1 parem, 0 
     private void uusSkoor() {
         skoorJaParimTulemus.getChildren().clear();
         Label tekst = new Label("Seis: Mängija " + mängijaVõitudeArv + " - " + arvutiVõitudeArv + " Arvuti");
+        tekst.setStyle("-fx-font-weight: bold");
+        tekst.setStyle("-fx-font-size: 20");
         skoorJaParimTulemus.getChildren().add(tekst);
     }
 
@@ -235,7 +264,7 @@ public class Kasutajaliides extends Application { // -1 kui vasak ja 1 parem, 0 
         Rectangle bg=new Rectangle(50,100);
         bg.setArcHeight(20);
         bg.setArcWidth(20);
-        bg.setFill(Color.WHITE);
+        bg.setFill(Color.LIGHTGRAY);
 
         Text tekst=new Text(kaart.getTugevus()+" "+kaart.getMast());
         if (kaart.getMast() == '♥' || kaart.getMast() == '♦')
@@ -268,137 +297,15 @@ public class Kasutajaliides extends Application { // -1 kui vasak ja 1 parem, 0 
         juhend.setWrapText(true);
 
         VBox juur1 =new VBox();
+        juur1.setPadding(new Insets(10,10,10,10));
 
         juur1.getChildren().add(juhend);
 
-        Button nupp=new Button("Saan aru!");
-        nupp.setOnMouseClicked(mouseEvent ->
-                juhendiAken.close());
 
-        juur1.getChildren().add(nupp);
-
-        Scene scene=new Scene(juur1,300,300);
+        Scene scene=new Scene(juur1,300,400);
         juhendiAken.setScene(scene);
+        juhendiAken.setMinWidth(350);
+        juhendiAken.setMinHeight(450);
         juhendiAken.show();
     }
-
-    /*public static void Mängi(){
-        Stage mänguLava=new Stage();
-
-        TilePane juur=new TilePane(10,10);
-        juur.setPrefRows(2);
-        juur.setPrefColumns(5);
-
-
-        Pakk mängukaardid = new Pakk();
-        mängukaardid.sega();
-
-        //Kaartide jagamine
-        List<Kaart> vasakKäsi = new ArrayList<>();
-        List<Kaart> paremKäsi = new ArrayList<>();
-        List<Kaart> ühiskaardid = new ArrayList<>();
-
-        mängukaardid.võtaKaart();
-        for (int i = 0; i < 2; i++) {
-            vasakKäsi.add(mängukaardid.võtaKaart());
-            paremKäsi.add(mängukaardid.võtaKaart());
-        }
-
-        mängukaardid.võtaKaart();
-        for (int i = 0; i < 3; i++) {
-            ühiskaardid.add(mängukaardid.võtaKaart());
-        }
-        for (int i = 0; i < 2; i++) {
-            mängukaardid.võtaKaart();
-            ühiskaardid.add(mängukaardid.võtaKaart());
-        }
-
-       // HBox ühiskaardidJoonis = new HBox();
-
-
-        HBox vasakKaardid=new HBox(10);
-        for (Kaart kaart : vasakKäsi) {
-            vasakKaardid.getChildren().add(kaartJoonis(kaart));
-        }
-        VBox vasakValik=new VBox(20);
-        vasakValik.getChildren().add(vasakKaardid);
-
-        Button vasakNupp=new Button("VASAK!");
-        vasakValik.getChildren().add(vasakNupp);
-
-
-        HBox paremKaardid=new HBox(10);
-        for (Kaart kaart : paremKäsi) {
-            paremKaardid.getChildren().add(kaartJoonis(kaart));
-        }
-        VBox paremValik=new VBox(20);
-        paremValik.getChildren().add(paremKaardid);
-
-
-        Button paremNupp=new Button("PAREM!");
-        paremValik.getChildren().add(paremNupp);
-
-        juur.getChildren().addAll(vasakValik,paremValik);
-
-
-
-
-        SeisuKontroll vasak = new SeisuKontroll(vasakKäsi, ühiskaardid); //loodud isendil on väga palju kasulikke meetodeid, mida hakkame kasutama seisude võrdlemiseks
-        SeisuKontroll parem = new SeisuKontroll(paremKäsi, ühiskaardid);
-
-        vasakNupp.setOnMouseClicked(event -> {
-            vasakValik(vasak,parem);
-            for (Kaart kaart : ühiskaardid) {
-                juur.getChildren().add(kaartJoonis(kaart));
-            }
-        });
-        paremNupp.setOnMouseClicked(event ->{
-            paremValik(vasak,parem);
-            for (Kaart kaart : ühiskaardid) {
-                juur.getChildren().add(kaartJoonis(kaart));
-            }
-        });
-
-
-        Scene scene=new Scene(juur);
-        mänguLava.setScene(scene);
-        mänguLava.show();
-
-    }
-
-    public static void vasakValik(SeisuKontroll vasak, SeisuKontroll parem){
-        Stage vasakLava=new Stage();
-        Group juur=new Group();
-        int võitija = kumbVõidab(vasak,parem);
-        if(võitija==-1) {
-            mängijaVõitudeArv++;
-            juur.getChildren().add(new TextArea("Võitsid! seis on: \n Arvuti - "+arvutiVõitudeArv+ "\n Mängija - "+mängijaVõitudeArv));
-
-        }
-        if(võitija==1) {
-            arvutiVõitudeArv++;
-            juur.getChildren().add(new TextArea("Kaotasid! seis on: \n Arvuti - "+arvutiVõitudeArv+ "\n Mängija - "+mängijaVõitudeArv));
-        }
-        vasakLava.setScene(new Scene(juur));
-        vasakLava.show();
-
-    }
-
-    public static void paremValik(SeisuKontroll vasak, SeisuKontroll parem){
-        Stage paremLava=new Stage();
-        Group juur=new Group();
-        int võitija = kumbVõidab(vasak,parem);
-        if(võitija==1) {
-            mängijaVõitudeArv++;
-            juur.getChildren().add(new TextArea("Võitsid! seis on: \n Arvuti - "+arvutiVõitudeArv+ "\n Mängija - "+mängijaVõitudeArv));
-
-        }
-        if(võitija==-1) {
-            arvutiVõitudeArv++;
-            juur.getChildren().add(new TextArea("Kaotasid! seis on: \n Arvuti - "+arvutiVõitudeArv+ "\n Mängija - "+mängijaVõitudeArv));
-        }
-        paremLava.setScene(new Scene(juur));
-        paremLava.show();
-
-    }*/
 }
