@@ -24,7 +24,7 @@ import java.util.Scanner;
 import static com.example.ryhmatoo2.Mäng.kumbVõidab;
 import static com.example.ryhmatoo2.Mäng.väljastaKaardid;
 
-public class Kasutajaliides extends Application { // -1 kui vasak ja 1 parem, 0 viik, vt anchorbane
+public class Kasutajaliides extends Application { // -1 kui vasak ja 1 parem, 0 viik
     static String mängijaNimi;
     static int mängijaVõitudeArv = 0;
     static int arvutiVõitudeArv = 0;
