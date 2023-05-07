@@ -1,0 +1,17 @@
+marten;0;2
+marten;5;2
+marten;0;0
+marten;0;0
+marten;6;4
+marten;3;1
+aar;4;3
+a;0;0
+a;2;2
+marten;0;0
+marten;3;2
+marten;6;4
+marten;6;4
+marten;6;4
+marten;6;4
+k;1;2
+m;0;0
