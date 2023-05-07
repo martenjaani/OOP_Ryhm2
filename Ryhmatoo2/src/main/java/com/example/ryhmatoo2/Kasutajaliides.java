@@ -306,6 +306,8 @@ public class Kasutajaliides extends Application { // -1 kui vasak ja 1 parem, 0 
 
         String tekst = """
                 Mängu eesmärgiks on valida kahe juhusliku pokkerikäe vahel. Pärast valiiku tegemist väljastatakse 5 ühiskaarti ja öeldakse kumb kätest võitis. Mängija võidu korral suurendatakse mängija punkte ühe võrra. Vastasel juhul suurenevad arvuti punktid. Kui käed olid sama tugevad, siis punktid jäävad samaks. Kaartide tugevuste arvestamisel vaadatakse maksimaalselt 5 kaarti korraga.
+                
+                Sinu tulemus salvestub akna kinni panemisel. Proovi saada palju võite ja äkki saad edetabelisse!
                             
                 Pokkerikäte tugevusjärjestus (alates tugevaimast):
                             
@@ -372,11 +374,11 @@ public class Kasutajaliides extends Application { // -1 kui vasak ja 1 parem, 0 
         Stage lava = new Stage();
 
         StringBuilder sb=new StringBuilder();
-        sb.append("EDETABEL!\n\n");
+        sb.append("TOP 5!\n\n");
         List<MängijaJaTulemus> mangijad=Edetabel();
         int mangijateArv=mangijad.size();
 
-        for (int i = 0; i < Math.min(10,mangijateArv); i++) {
+        for (int i = 0; i < Math.min(5,mangijateArv); i++) {
             sb.append(i+1+". "+mangijad.get(i)+"\n");
         }
 
@@ -393,8 +395,8 @@ public class Kasutajaliides extends Application { // -1 kui vasak ja 1 parem, 0 
 
         Scene scene = new Scene(juur1, 300, 400);
         lava.setScene(scene);
-        lava.setMinWidth(350);
-        lava.setMinHeight(450);
+        lava.setMinWidth(200);
+        lava.setMinHeight(300);
         lava.show();
 
     }
