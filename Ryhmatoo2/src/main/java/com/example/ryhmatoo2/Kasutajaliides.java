@@ -38,6 +38,7 @@ public class Kasutajaliides extends Application { // -1 kui vasak ja 1 parem, 0 
     static HBox paremKaardid=new HBox(10);
 
     static Label tulemusTekst = new Label("");
+
     static HBox skoorJaParimTulemus = new HBox();
     static HBox viisKaarti = new HBox(10);
     static HBox käed = new HBox(30);
@@ -54,6 +55,7 @@ public class Kasutajaliides extends Application { // -1 kui vasak ja 1 parem, 0 
         Label tekst = new Label("Sisesta nimi: ");
         TextField sisend = new TextField();
         Button kinnita = new Button("KINNITA");
+
 
         juur.setOnKeyPressed(event -> {
             if (event.getCode().toString().equals("ENTER")) {
@@ -105,7 +107,14 @@ public class Kasutajaliides extends Application { // -1 kui vasak ja 1 parem, 0 
             käeValikud.getChildren().clear();
             käeValikud.getChildren().add(mängiVeel);
 
+            SeisuKontroll vasak=new SeisuKontroll(vasakKäsi,ühiskaardid);
+            SeisuKontroll parem=new SeisuKontroll(paremKäsi,ühiskaardid);
+            tulemusTekst.setText("Valisid vasakpoolse käe\nSul on: "+SeisuKontroll.indeksSeisuks(vasak.tugevaimSeis())+
+                    "\nArvutil on: "+SeisuKontroll.indeksSeisuks(parem.tugevaimSeis()));
+
             valik(-1);
+
+
         });
 
         paremNupp.setOnMouseClicked(event -> {
@@ -115,6 +124,11 @@ public class Kasutajaliides extends Application { // -1 kui vasak ja 1 parem, 0 
                 viisKaarti.getChildren().add(kaartJoonis(kaart));
             käeValikud.getChildren().clear();
             käeValikud.getChildren().add(mängiVeel);
+
+            SeisuKontroll vasak=new SeisuKontroll(vasakKäsi,ühiskaardid);
+            SeisuKontroll parem=new SeisuKontroll(paremKäsi,ühiskaardid);
+            tulemusTekst.setText("Valisid parempoolse käe\nSul on: "+SeisuKontroll.indeksSeisuks(parem.tugevaimSeis())+
+                    "\nArvutil on: "+SeisuKontroll.indeksSeisuks(vasak.tugevaimSeis()));
 
             valik(1);
         });
@@ -128,23 +142,25 @@ public class Kasutajaliides extends Application { // -1 kui vasak ja 1 parem, 0 
 
         juur.getChildren().addAll(nupud, skoorJaParimTulemus, tulemusTekst, viisKaarti, käed, käeValikud);
 
-        Scene scene = new Scene(juur);
+        Scene scene = new Scene(juur,300,300);
         main.setScene(scene);
         main.show();
     }
 
     private void valik(int i) {
+        String seis=tulemusTekst.getText();;
         if (i == -1 && võitja == -1) {
-            tulemusTekst.setText("Võitsid!");
+            tulemusTekst.setText(seis+ "\nVõitsid!");
             mängijaVõitudeArv++;
         } else if (i == 1 && võitja == 1) {
-            tulemusTekst.setText("Võitsid!");
+            seis=tulemusTekst.getText();
+            tulemusTekst.setText(seis+ "\nVõitsid!");
             mängijaVõitudeArv++;
         } else if (võitja != 0) {
-            tulemusTekst.setText("Kaotasid!");
+            tulemusTekst.setText(seis+ "\nKaotasid!");
             arvutiVõitudeArv++;
         } else {
-            tulemusTekst.setText("Viik!");
+            tulemusTekst.setText(seis+ "\nViik!");
         }
         uusSkoor();
     }
@@ -248,7 +264,7 @@ public class Kasutajaliides extends Application { // -1 kui vasak ja 1 parem, 0 
             
             \s""";
 
-        TextArea juhend=new TextArea(tekst);
+        Label juhend=new Label(tekst);
         juhend.setWrapText(true);
 
         VBox juur1 =new VBox();
@@ -261,7 +277,7 @@ public class Kasutajaliides extends Application { // -1 kui vasak ja 1 parem, 0 
 
         juur1.getChildren().add(nupp);
 
-        Scene scene=new Scene(juur1);
+        Scene scene=new Scene(juur1,300,300);
         juhendiAken.setScene(scene);
         juhendiAken.show();
     }
