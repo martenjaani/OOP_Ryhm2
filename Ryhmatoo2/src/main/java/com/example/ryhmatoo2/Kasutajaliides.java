@@ -18,14 +18,12 @@ import javafx.scene.text.Font;
 import javafx.scene.text.FontWeight;
 import javafx.scene.text.Text;
 import javafx.stage.Stage;
-
 import java.io.*;
-import java.nio.charset.Charset;
 import java.util.*;
 
 import static com.example.ryhmatoo2.Mäng.kumbVõidab;
 
-public class Kasutajaliides extends Application { // -1 kui vasak ja 1 parem, 0 viik
+public class Kasutajaliides extends Application { // -1 kui vasak käsi ja 1 kui parem käsi, 0 viik
     static String mängijaNimi;
     static int mängijaVõitudeArv = 0;
     static int arvutiVõitudeArv = 0;
@@ -93,6 +91,7 @@ public class Kasutajaliides extends Application { // -1 kui vasak ja 1 parem, 0 
 
         primaryStage.setMinHeight(130);
         primaryStage.setMinWidth(300);
+        primaryStage.setTitle("Nimi");
 
         juur.setAlignment(Pos.CENTER);
 
@@ -103,9 +102,9 @@ public class Kasutajaliides extends Application { // -1 kui vasak ja 1 parem, 0 
 
     public void mäng() {
         Stage main = new Stage();
+        main.setTitle("Mäng");
 
         seisuTekst.setFont(Font.font("Gotham", 14));
-        //tulemusTekst.setStyle("-fx-font-weight: bold");
         Effect fx = new Glow();
         seisuTekst.setEffect(fx);
 
@@ -157,8 +156,6 @@ public class Kasutajaliides extends Application { // -1 kui vasak ja 1 parem, 0 
                     "\nArvutil on: " + SeisuKontroll.indeksSeisuks(parem.tugevaimSeis()));
 
             valik(-1);
-
-
         });
 
         paremNupp.setOnMouseClicked(event -> {
@@ -184,8 +181,6 @@ public class Kasutajaliides extends Application { // -1 kui vasak ja 1 parem, 0 
             käeValikud.getChildren().addAll(vasakNupp, paremNupp);
             seisuTekst.setText(tühjadRead);
         });
-
-        //juur.getChildren().addAll(nupud, skoorJaParimTulemus, tulemusTekst, viisKaarti, käed, käeValikud);
 
         juur.add(nupud, 0, 0);
         juur.add(skoorJaParimTulemus, 0, 1);
@@ -217,6 +212,7 @@ public class Kasutajaliides extends Application { // -1 kui vasak ja 1 parem, 0 
 
     private void veateade(String teade) {
         Stage veateade = new Stage();
+        veateade.setTitle("Veateade");
         VBox vbox = new VBox(10);
 
         Label tekst = new Label(teade);
@@ -313,7 +309,7 @@ public class Kasutajaliides extends Application { // -1 kui vasak ja 1 parem, 0 
         }
     }
 
-    public static StackPane kaartKinni() {
+    public static StackPane kaartKinni() { //tagurpidi oleva kaardi joonistamine
         Rectangle bg = new Rectangle(50, 100);
         bg.setArcHeight(20);
         bg.setArcWidth(20);
@@ -411,6 +407,7 @@ public class Kasutajaliides extends Application { // -1 kui vasak ja 1 parem, 0 
     }
     static void kuvaEdetabel() throws IOException {
         Stage lava = new Stage();
+        lava.setTitle("Edetabel");
 
         StringBuilder sb=new StringBuilder();
         sb.append("TOP 5!\n\n");
