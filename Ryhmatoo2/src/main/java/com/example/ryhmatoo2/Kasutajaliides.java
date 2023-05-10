@@ -58,24 +58,43 @@ public class Kasutajaliides extends Application { // -1 kui vasak ja 1 parem, 0 
 
         Label tekst = new Label("Sisesta nimi: ");
         TextField sisend = new TextField();
+        sisend.setMaxWidth(400);
         Button kinnita = new Button("KINNITA");
 
 
         juur.setOnKeyPressed(event -> {
-            if (event.getCode().toString().equals("ENTER")) {
-                mängijaNimi = sisend.getText();
-                primaryStage.close();
-                mäng();
+            try {
+                if (event.getCode().toString().equals("ENTER")) {
+                    mängijaNimi = sisend.getText();
+                    if (mängijaNimi.trim().equals(""))
+                        throw new IOException();
+                    primaryStage.close();
+                    mäng();
+                }
+            } catch (IOException e) {
+                veateade("Nimi peab sisaldama sümboleid!");
             }
         });
 
         kinnita.setOnMouseClicked(event -> {
-            mängijaNimi = sisend.getText();
-            primaryStage.close();
-            mäng();
+            try {
+                mängijaNimi = sisend.getText();
+                if (mängijaNimi.trim().equals(""))
+                    throw new IOException();
+                primaryStage.close();
+                mäng();
+            } catch (IOException e) {
+                veateade("Nimi peab sisaldama sümboleid!");
+            }
+
         });
 
         juur.getChildren().addAll(tekst, sisend, kinnita);
+
+        primaryStage.setMinHeight(130);
+        primaryStage.setMinWidth(300);
+
+        juur.setAlignment(Pos.CENTER);
 
         Scene scene = new Scene(juur);
         primaryStage.setScene(scene);
@@ -95,7 +114,7 @@ public class Kasutajaliides extends Application { // -1 kui vasak ja 1 parem, 0 
             try {
                 kuvaEdetabel();
             } catch (IOException e) {
-                throw new RuntimeException(e);
+                veateade("Edetabeli tegemiseks pole piisavalt andmeid. Tulemuse salvestamiseks sulge mäng.");
             }
         });
 
@@ -194,6 +213,26 @@ public class Kasutajaliides extends Application { // -1 kui vasak ja 1 parem, 0 
                 main.close();
             }
         });
+    }
+
+    private void veateade(String teade) {
+        Stage veateade = new Stage();
+        VBox vbox = new VBox(10);
+
+        Label tekst = new Label(teade);
+        tekst.setWrapText(true);
+        Button ok = new Button("OK");
+
+        ok.setOnMouseClicked(event1 -> veateade.close());
+
+        vbox.getChildren().addAll(tekst, ok);
+        vbox.setAlignment(Pos.CENTER);
+
+        Scene s = new Scene(vbox);
+        veateade.setMinWidth(150);
+        veateade.setMinHeight(105);
+        veateade.setScene(s);
+        veateade.show();
     }
 
     private void valik(int i) {
